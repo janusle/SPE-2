@@ -19,7 +19,7 @@ public class iterative_server {
     private String getCurrentTime(){
 
         Calendar currentDate = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd:mm:yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd:MM:yyyy");
         return formatter.format( currentDate.getTime() );
 
     }
@@ -37,13 +37,14 @@ public class iterative_server {
           
            SSLServerSocketFactory ssf = (SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
            SSLServerSocket ss = (SSLServerSocket)ssf.createServerSocket( this.port );
+           System.out.println("Server start...");
            while( true ){
               
                SSLSocket s = (SSLSocket) ss.accept();
                BufferedReader in = new BufferedReader(new InputStreamReader( s.getInputStream() ) );
                PrintWriter out = new PrintWriter( s.getOutputStream(), true);
                String line = null;
-               while ( ( line = in.readLine() ) != null ){
+               if ( ( line = in.readLine() ) != null ){
                   
                    if ( line.equals( "What is the time?" ) ){
                       System.out.println("Request from " + s.getInetAddress().getHostAddress() );
