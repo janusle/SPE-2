@@ -8,7 +8,7 @@ if [ $# == 0 ];then
 fi
 
 if [ $1 == ir ];then
-  java -Djavax.net.ssl.keyStore=mySrvKeystore -Djavax.net.ssl.keyStorePassword=123456 iterative_server
+  java -Djavax.net.ssl.keyStore=mySrvKeystore -Djavax.net.ssl.keyStorePassword=123456 iterativeServer
 elif [ $1 == cc ];then
   java -Djavax.net.ssl.keyStore=mySrvKeystore -Djavax.net.ssl.keyStorePassword=123456 concurrentServer
 else

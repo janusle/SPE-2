@@ -9,6 +9,9 @@ concurrentServer:
 client:
 	javac client.java
 
+genkey:
+	./genkey.sh
+
 clean:
 	-rm *.class
 
