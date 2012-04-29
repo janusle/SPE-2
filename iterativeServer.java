@@ -11,7 +11,7 @@ public class iterativeServer {
 
     public static void main(String[] args) {
 
-        iterativeServer is = new iterativeServer(9999);
+        iterativeServer is = new iterativeServer(40302);
         is.run();
 
     }

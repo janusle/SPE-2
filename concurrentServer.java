@@ -80,7 +80,7 @@ public class concurrentServer {
 
     public static void main(String[] args) {
 
-        concurrentServer cs = new concurrentServer(9999);
+        concurrentServer cs = new concurrentServer(40302);
         cs.run();
 
     }
