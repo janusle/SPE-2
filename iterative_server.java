@@ -10,10 +10,10 @@ public class iterative_server {
 
 
     public static void main(String[] args) {
-          
-         iterative_server is = new iterative_server(9999);
-         is.run();
-     
+
+        iterative_server is = new iterative_server(9999);
+        is.run();
+
     }
 
     private String getCurrentTime(){
@@ -23,52 +23,67 @@ public class iterative_server {
         return formatter.format( currentDate.getTime() );
 
     }
-  
+
     public iterative_server( int port ){
-      
+
         this.port = port;
 
     }
 
-    
+
     public void run(){
 
+        SSLServerSocket ss = null;
         try{
-          
-           SSLServerSocketFactory ssf = (SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
-           SSLServerSocket ss = (SSLServerSocket)ssf.createServerSocket( this.port );
-           System.out.println("Server start...");
-           while( true ){
-              
-               SSLSocket s = (SSLSocket) ss.accept();
-               BufferedReader in = new BufferedReader(new InputStreamReader( s.getInputStream() ) );
-               PrintWriter out = new PrintWriter( s.getOutputStream(), true);
-               String line = null;
-               if ( ( line = in.readLine() ) != null ){
-                  
-                   if ( line.equals( "What is the time?" ) ){
-                      System.out.println("Request from " + s.getInetAddress().getHostAddress() );
-                      String currentTime = this.getCurrentTime();                    
-                      out.println( currentTime ); 
-                   }
-                   else{
-                     System.out.println("Invalid request from " + s.getInetAddress().getHostAddress() );
-                   }
 
-               }
-               out.close();
-               in.close();
-               s.close();
-
-           }
-
-
-        }catch(Exception e){
+            SSLServerSocketFactory ssf = (SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
+            ss = (SSLServerSocket)ssf.createServerSocket( this.port );
+            System.out.println("Server start...");
+        }
+        catch(Exception e){
 
             System.out.println( e.getMessage() );
             System.exit(-1);
         }
 
+        BufferedReader in = null;
+        PrintWriter out = null;
+        SSLSocket s = null;
+
+        while (true){ 
+            try{
+
+                s = (SSLSocket) ss.accept();
+                in = new BufferedReader(new InputStreamReader( s.getInputStream() ) );
+                out = new PrintWriter( s.getOutputStream(), true);
+                String line = null;
+                if ( ( line = in.readLine() ) != null ){
+
+                    if ( line.equals( "What is the time?" ) ){
+                        System.out.println("Request from " + s.getInetAddress().getHostAddress() );
+                        String currentTime = this.getCurrentTime();                    
+                        out.println( currentTime ); 
+                    }
+                    else{
+                        System.out.println("Invalid request from " + s.getInetAddress().getHostAddress() );
+                    }
+
+                }
+                out.close();
+                in.close();
+                s.close();
+
+            }
+            catch(SSLHandshakeException sse){
+                System.out.println( "Unknown certificate, ignore" );
+
+            }
+            catch(Exception e){
+
+                System.out.println( e.getMessage() );
+                System.exit(-1);
+            }
+        }    
 
     }
 
