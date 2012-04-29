@@ -9,7 +9,7 @@ public class client{
 
     public static void main(String[] args) {
           
-         client c = new client("localhost", 9999);
+         client c = new client("localhost", 40302);
          c.getTime();
      
     }
