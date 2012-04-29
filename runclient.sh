@@ -1,3 +1,8 @@
 #!/bin/bash
 
-java -Djavax.net.ssl.trustStore=mySrvKeystore client
+
+for i in {1..20}
+do
+   java -Djavax.net.ssl.trustStore=mySrvKeystore client&
+done
+

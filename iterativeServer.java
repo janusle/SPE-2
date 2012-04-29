@@ -4,17 +4,24 @@ import javax.net.ssl.*;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
-public class iterative_server {
+public class iterativeServer {
 
     private int port;
 
 
     public static void main(String[] args) {
 
-        iterative_server is = new iterative_server(9999);
+        iterativeServer is = new iterativeServer(9999);
         is.run();
 
     }
+
+    public iterativeServer( int port ){
+
+        this.port = port;
+
+    }
+
 
     private String getCurrentTime(){
 
@@ -24,13 +31,7 @@ public class iterative_server {
 
     }
 
-    public iterative_server( int port ){
-
-        this.port = port;
-
-    }
-
-
+    
     public void run(){
 
         SSLServerSocket ss = null;
