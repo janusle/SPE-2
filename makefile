@@ -1,18 +1,18 @@
-all: iterativeServer concurrentServer client
+all: iterativeServer concurrentServer req_client
 
 iterativeServer:
-	javac iterativeServer.java
+	javac ./server/iterativeServer.java
 
 concurrentServer:
-	javac concurrentServer.java
+	javac ./server/concurrentServer.java
 
-client:
-	javac client.java
+req_client:
+	javac ./client/client.java
 
 genkey:
 	./genkey.sh
 
 clean:
-	-rm *.class
-
+	-rm ./server/*.class
+	-rm ./client/*.class
 
