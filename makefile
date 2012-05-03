@@ -1,4 +1,7 @@
-all: iterativeServer concurrentServer req_client
+all: iterativeServer concurrentServer req_client MultiServer
+
+MultiServer:
+	javac ./server/MultiServer.java ./server/tools.java
 
 iterativeServer:
 	javac ./server/iterativeServer.java
@@ -8,6 +11,7 @@ concurrentServer:
 
 req_client:
 	javac ./client/client.java
+
 
 genkey:
 	./genkey.sh
