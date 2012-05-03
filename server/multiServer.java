@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
+import java.text.SimpleDateFormat;
 
 class clientInfo{
 
@@ -37,26 +37,105 @@ class clientInfo{
 
 }
 
-public class multiServer{
 
-    private final int PORT = 40302;
-    private ArrayList<clientInfo> addresses = new ArrayList<clientInfo>();
+class TimeInfo{
 
-    public static void main(String []args){
+    public ArrayList<clientInfo> addresses;
+    public String time;
+
+
+    public TimeInfo( ArrayList<clientInfo> addresses, String time){
+
+        this.addresses = addresses;
+        this.time = time;
 
     }
 
+
+}
+
+
+
+public class MultiServer{
+
+    private final int PORT = 40302;
+    private ArrayList<clientInfo> addresses = new ArrayList<clientInfo>();
+    private Timer timer = null;
+
+    public static void main(String []args){
+
+        new MultiServer().run(); //runing server;
+         
+    }
+
+    class Sender extends TimerTask{
+   
+        private String getCurrentTime(){
+
+            Calendar currentDate = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd:MM:yyyy");
+            return formatter.format( currentDate.getTime() );
+
+        }
+
+        public void run() {
+          
+            if( addresses.size() > 0 ){ 
+              
+              clientInfo ci;
+              InetAddress ip;
+              int port;
+
+              for(int i=0; i<addresses.size(); i++ ){
+
+                    try{
+
+                        ci = addresses.get(i); // get first client
+                        ip = ci.getAddress();
+                        port = ci.getPort();
+                        Socket s = new Socket( ip, port );
+                        PrintWriter out = new PrintWriter( s.getOutputStream(), true );
+                        String time = this.getCurrentTime();               
+                        out.print( new TimeInfo( addresses, time )  );
+                        out.close();
+                        s.close();
+                        System.out.println("Time is sent to " + ip.getHostAddress() + ":" + port );
+                        return;
+                    }
+                    catch(Exception e)
+                    {  
+                        //System.err.println("Fail to connect to " + ip.getHostAddress() + ":" + port );
+                        continue;
+                    }
+
+               }
+               System.err.println("Failed to send time to client, will resend it one minute after");
+
+            }
+            else{ // no subscription
+
+                System.out.println("No subscription, will try one minute after");
+
+            }
+
+        }
+    } 
+    // end of inner class Sender 
 
     public void run(){
 
           try{
            
              ServerSocket ss = new ServerSocket(PORT);
+             System.out.println("Server is started...");
+
              while(true){
   
                Socket cs =  ss.accept();
                BufferedReader in = new BufferedReader( new InputStreamReader( cs.getInputStream() ) );
                String line;
+               int index; 
+
                if ( ( line = in.readLine() ) != null ){
 
                    if( line.equals("subscribe") ){
@@ -64,11 +143,16 @@ public class multiServer{
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
                        clientInfo ci = new clientInfo( ia, port );
-                        
-                       if ( ( int index = addresses.indexOf( ci ) ) == -1 ){
-                    
+                       if ( ( index = addresses.indexOf( ci ) ) == -1 ){
+              
+                           
                            addresses.add( ci );
                            System.out.println("New subscriber from " + ia.getHostAddress() );
+                           if ( this.timer == null ){
+                              timer = new Timer();
+                              timer.schedule( new Sender(), 60 * 1000 );
+                              System.out.println("Timer is set");
+                           }
 
                        }
                        else{ //duplicated subscribe
@@ -81,7 +165,7 @@ public class multiServer{
                        
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
-                       if ( ( int index = addresses.indexOf( new clientInfo( ia, port) )) != -1 ){ //remove client
+                       if ( ( index = addresses.indexOf( new clientInfo( ia, port) )) != -1 ){ //remove client
                           addresses.remove( index );
 
                        }
@@ -91,9 +175,17 @@ public class multiServer{
 
                        }
                    }
+                   else{ // invalid request 
+                     
+                       InetAddress ia = cs.getInetAddress();
+                       System.err.println("Invalid request from " + ia.getHostAddress() );
 
+                   }
                }
-
+          
+               in.close();
+               cs.close();
+               
              }
 
           }
