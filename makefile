@@ -1,7 +1,10 @@
-all: iterativeServer concurrentServer req_client MultiServer
+all: iterativeServer concurrentServer req_client MultiServer MultiClient
 
 MultiServer:
-	javac ./server/MultiServer.java ./server/tools.java
+	javac ./server/MultiServer.java ./tools/tools.java
+
+MultiClient:
+	javac ./client/MultiClient.java ./tools/tools.java
 
 iterativeServer:
 	javac ./server/iterativeServer.java
@@ -19,4 +22,3 @@ genkey:
 clean:
 	-rm ./server/*.class
 	-rm ./client/*.class
-

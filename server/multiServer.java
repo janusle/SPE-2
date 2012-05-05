@@ -1,3 +1,4 @@
+package server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -81,6 +82,7 @@ public class MultiServer{
   
                Socket cs =  ss.accept();
                BufferedReader in = new BufferedReader( new InputStreamReader( cs.getInputStream() ) );
+               PrintWriter out = new PrintWriter( cs.getOutputStream(), true );
                String line;
                int index; 
 
@@ -96,11 +98,14 @@ public class MultiServer{
                            
                            addresses.add( ci );
                            System.out.println("New subscriber from " + ia.getHostAddress() );
+                           out.println("OK"); //confirm subscription
+
                            if ( this.timer == null ){
                               timer = new Timer();
                               timer.schedule( new Sender(), 60 * 1000 );
                               System.out.println("Timer is set");
                            }
+
 
                        }
                        else{ //duplicated subscribe
@@ -132,6 +137,7 @@ public class MultiServer{
                }
           
                in.close();
+               out.close();
                cs.close();
                
              }
