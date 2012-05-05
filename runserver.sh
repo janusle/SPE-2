@@ -12,7 +12,7 @@ if [ $1 == ir ];then
 elif [ $1 == cc ];then
   java -Djavax.net.ssl.keyStore=mySrvKeystore -Djavax.net.ssl.keyStorePassword=123456 server.concurrentServer
 elif [ $1 == multi ];then
-  java -cp tools/* server.MultiServer
+  java server.MultiServer
 else
   echo "Invalid argument"
 fi

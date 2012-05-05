@@ -9,7 +9,7 @@ if [ $# == 0 ];then
 fi
 
 if [ $1 == multi ];then
-    java -cp tools/* client.MultiClient 
+    java client.MultiClient 
 else
     for i in {1..20}
     do

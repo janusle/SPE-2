@@ -1,19 +1,25 @@
-all: iterativeServer concurrentServer req_client MultiServer MultiClient
+JC = javac
 
-MultiServer:
-	javac ./server/MultiServer.java ./tools/tools.java
+all: iterativeServer concurrentServer req_client MultiServer MultiClient 
 
-MultiClient:
-	javac ./client/MultiClient.java ./tools/tools.java
+tools:
+	$(JC) ./tools/clientInfo.java 
+	$(JC) ./tools/TimeInfo.java
+
+MultiServer: tools
+	$(JC) ./server/MultiServer.java ./tools/clientInfo.java
+
+MultiClient: tools
+	$(JC) ./client/MultiClient.java ./tools/clientInfo.java ./tools/TimeInfo.java
 
 iterativeServer:
-	javac ./server/iterativeServer.java
+	$(JC) ./server/iterativeServer.java
 
 concurrentServer:
-	javac ./server/concurrentServer.java
+	$(JC) ./server/concurrentServer.java
 
 req_client:
-	javac ./client/client.java
+	$(JC) ./client/client.java
 
 
 genkey:
@@ -22,3 +28,4 @@ genkey:
 clean:
 	-rm ./server/*.class
 	-rm ./client/*.class
+	-rm ./tools/*.class

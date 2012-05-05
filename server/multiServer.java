@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
-
+import tools.*;
 
 public class MultiServer{
 
@@ -43,9 +43,9 @@ public class MultiServer{
                         ip = ci.getAddress();
                         port = ci.getPort();
                         Socket s = new Socket( ip, port );
-                        PrintWriter out = new PrintWriter( s.getOutputStream(), true );
+                        ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
                         String time = this.getCurrentTime();               
-                        out.print( new TimeInfo( addresses, time )  );
+                        out.writeObject( new TimeInfo( addresses, time )  );
                         out.close();
                         s.close();
                         System.out.println("Time is sent to " + ip.getHostAddress() + ":" + port );
@@ -102,7 +102,7 @@ public class MultiServer{
 
                            if ( this.timer == null ){
                               timer = new Timer();
-                              timer.schedule( new Sender(), 60 * 1000 );
+                              timer.schedule( new Sender(), 2 * 1000 );
                               System.out.println("Timer is set");
                            }
 

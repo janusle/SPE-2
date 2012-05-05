@@ -1,8 +1,8 @@
 package tools;
 import java.net.*;
-import java.util.*;
+import java.io.Serializable;
 
-class clientInfo{
+public class clientInfo implements Serializable{
 
     private InetAddress ia;
     private int port;
@@ -37,19 +37,4 @@ class clientInfo{
 }
 
 
-class TimeInfo{
 
-    public ArrayList<clientInfo> addresses;
-    public String time;
-    public int point;
-
-    public TimeInfo( ArrayList<clientInfo> addresses, String time){
-
-        this.addresses = addresses;
-        this.time = time;
-        this.point = 0; 
-
-    }
-
-
-}
