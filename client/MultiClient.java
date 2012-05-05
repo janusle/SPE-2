@@ -98,6 +98,10 @@ public class MultiClient{
                     catch(Exception e)
                     {  
                         System.err.println("Fail to send time to client " + i ); 
+
+                        if( timeinfo.point + 1 < timeinfo.addresses.size() )
+                           timeinfo.point++;
+
                         continue;
                     }
 

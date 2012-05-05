@@ -2,7 +2,7 @@ package server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import tools.*;
 
 public class MultiServer{
@@ -18,7 +18,8 @@ public class MultiServer{
     }
 
     class Sender extends TimerTask{
-   
+        
+        /*
         private String getCurrentTime(){
 
             Calendar currentDate = Calendar.getInstance();
@@ -26,6 +27,7 @@ public class MultiServer{
             return formatter.format( currentDate.getTime() );
 
         }
+        */
 
         public void run() {
           
@@ -34,7 +36,7 @@ public class MultiServer{
               clientInfo ci;
               InetAddress ip;
               int port;
-              TimeInfo timeinfo = null;
+              TimeInfo timeinfo = new TimeInfo( addresses );
     
               for(int i=0; i<addresses.size(); i++ ){
 
@@ -45,18 +47,20 @@ public class MultiServer{
                         port = ci.getPort();
                         Socket s = new Socket( ip, port );
                         ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
-                        String time = this.getCurrentTime();               
-                        timeinfo = new TimeInfo( addresses, time );
+                        //String time = this.getCurrentTime();               
+                        //timeinfo.time = time;
                         out.writeObject( timeinfo );
                         out.close();
                         s.close();
                         System.out.println("Time is sent to client " + i + " " + ip.getHostAddress() + ":" + port +"\n");
+                        System.out.println( timeinfo.point );
                         return;
                     }
                     catch(Exception e)
                     {  
                         System.err.println("Fail to send time to client " + i ); 
-                       
+                      
+
                         if( timeinfo != null && timeinfo.point + 1 < timeinfo.addresses.size() )
                            timeinfo.point++;
 
