@@ -34,7 +34,8 @@ public class MultiServer{
               clientInfo ci;
               InetAddress ip;
               int port;
-
+              TimeInfo timeinfo = null;
+    
               for(int i=0; i<addresses.size(); i++ ){
 
                     try{
@@ -45,15 +46,20 @@ public class MultiServer{
                         Socket s = new Socket( ip, port );
                         ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
                         String time = this.getCurrentTime();               
-                        out.writeObject( new TimeInfo( addresses, time )  );
+                        timeinfo = new TimeInfo( addresses, time );
+                        out.writeObject( timeinfo );
                         out.close();
                         s.close();
-                        System.out.println("Time is sent to " + ip.getHostAddress() + ":" + port );
+                        System.out.println("Time is sent to client " + i + " " + ip.getHostAddress() + ":" + port +"\n");
                         return;
                     }
                     catch(Exception e)
                     {  
-                        //System.err.println("Fail to connect to " + ip.getHostAddress() + ":" + port );
+                        System.err.println("Fail to send time to client " + i ); 
+                       
+                        if( timeinfo != null && timeinfo.point + 1 < timeinfo.addresses.size() )
+                           timeinfo.point++;
+
                         continue;
                     }
 
@@ -66,7 +72,8 @@ public class MultiServer{
                 System.out.println("No subscription, will try one minute after");
 
             }
-
+       
+            System.out.println("");
         }
     } 
     // end of inner class Sender 
@@ -102,7 +109,7 @@ public class MultiServer{
 
                            if ( this.timer == null ){
                               timer = new Timer();
-                              timer.schedule( new Sender(), 2 * 1000 );
+                              timer.schedule( new Sender(), 3 * 1000, 3 * 1000 );
                               System.out.println("Timer is set");
                            }
 

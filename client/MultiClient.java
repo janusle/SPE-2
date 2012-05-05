@@ -55,14 +55,63 @@ public class MultiClient{
 
         Socket s = this.ss.accept();
 
-        //PrintWriter out = new Printwriter( csocket.getOutputStream(), true);
         ObjectInputStream in = new ObjectInputStream( s.getInputStream() );
         this.timeinfo = (TimeInfo)in.readObject();
         System.out.println( this.timeinfo.time );
-        this.timeinfo.point++;  
-       
+        
         in.close();
         s.close();
+
+
+    }
+
+    public void cast(){
+         
+          if( this.timeinfo.point + 1 < this.timeinfo.addresses.size() )
+               this.timeinfo.point++;  
+          else
+               this.timeinfo.point = -1; // no more client
+
+
+          if( timeinfo.addresses.size() > 0 && timeinfo.point != -1 ){ 
+       
+              clientInfo ci;
+              InetAddress ip;
+              int port;
+
+              
+              for(int i=timeinfo.point; i<timeinfo.addresses.size(); i++ ){
+
+                    try{
+
+                        ci = timeinfo.addresses.get(i); // get first client
+                        ip = ci.getAddress();
+                        port = ci.getPort();
+                        Socket s = new Socket( ip, port );
+                        ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
+                        out.writeObject( timeinfo );
+                        out.close();
+                        s.close();
+                        System.out.println("Time is sent to client " +  i  + " " + ip.getHostAddress() + ":" + port + "\n");
+                        return;
+                    }
+                    catch(Exception e)
+                    {  
+                        System.err.println("Fail to send time to client " + i ); 
+                        continue;
+                    }
+
+               }
+               System.err.println("Failed to send time to clients, will resend after");
+
+            }
+            else{ // no subscription
+
+                if( timeinfo.point == -1 ) 
+                  System.out.println("I am last client");
+
+            }
+            System.out.println("");
 
 
     }
@@ -75,6 +124,7 @@ public class MultiClient{
          while(true){
 
            this.getTime(); 
+           this.cast(); 
 
          }
 
