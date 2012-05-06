@@ -3,7 +3,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.rmi.server.UID;
-//import java.text.SimpleDateFormat;
 import tools.*;
 
 class NoSuchClientException extends Exception{};
@@ -12,6 +11,7 @@ class NoSuchClientException extends Exception{};
 public class MultiServer{
 
     private final int PORT = 40302;
+    private final int DELAY = 5000;
     private ArrayList<clientInfo> addresses = new ArrayList<clientInfo>();
     private Timer timer = null;
 
@@ -22,20 +22,10 @@ public class MultiServer{
     }
 
     class Sender extends TimerTask{
-        
-        /*
-        private String getCurrentTime(){
 
-            Calendar currentDate = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd:MM:yyyy");
-            return formatter.format( currentDate.getTime() );
-
-        }
-        */
-
-        public void run() {
+            public void run() {
           
-            if( addresses.size() > 0 ){ 
+            if( addresses.size() > 0 ){ //There is subscriber 
               
               clientInfo ci;
               InetAddress ip;
@@ -46,27 +36,24 @@ public class MultiServer{
 
                     try{
 
-                        ci = addresses.get(i); // get first client
-                        ip = ci.getAddress();
-                        port = ci.getPort();
+                        ci = addresses.get(i); // get client
+                        ip = ci.getAddress(); // get ip of client
+                        port = ci.getPort(); // get port of cilent
                         Socket s = new Socket( ip, port );
                         ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
-                        //String time = this.getCurrentTime();               
-                        //timeinfo.time = time;
-                        out.writeObject( timeinfo );
+                        out.writeObject( timeinfo ); //send time infomation
                         out.close();
                         s.close();
-                        System.out.println("Time is sent to client " + i + " " + ip.getHostAddress() + ":" + port +"\n");
-                        System.out.println( timeinfo.point );
+                        System.out.println("Time is sent to " + i + "th(st/nd) client " + ip.getHostAddress() + ":" + port +"\n");
                         return;
                     }
                     catch(Exception e)
                     {  
-                        System.err.println("Fail to send time to client " + i ); 
+                        System.err.println("Fail to send time to " + i + "th(st/nd) client" ); 
                       
 
                         if( timeinfo != null && timeinfo.point + 1 < timeinfo.addresses.size() )
-                           timeinfo.point++;
+                           timeinfo.point++; //incrument client point 
 
                         continue;
                     }
@@ -116,58 +103,50 @@ public class MultiServer{
 
                if ( ( line = in.readLine() ) != null ){
 
-                   if( line.equals("subscribe") ){
+                   if( line.equals("subscribe") ){ // client ask for subscription
 
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
 
 
-                       String id = new UID().toString();
+                       String id = new UID().toString(); //generate unique client id
 
                        clientInfo ci = new clientInfo( ia, port, id);
-                       /*if ( ( index = addresses.indexOf( ci ) ) == -1 ){*/
               
                            
-                           addresses.add( ci );
-                           out.println( id );//confirm subscription
+                       addresses.add( ci ); // add the client info to list
+                       out.println( id );//confirm subscription
 
-                           System.out.println("New subscriber from " + ia.getHostAddress() + ":" + port +
+                       System.out.println("New subscriber from " + ia.getHostAddress() + ":" + port +
                                               " client id " + id );
                            
-                           if ( this.timer == null ){
+                       if ( this.timer == null ){
                               timer = new Timer();
-                              timer.schedule( new Sender(), 5 * 1000, 5 * 1000 );
+                              timer.schedule( new Sender(), DELAY, DELAY );
                               System.out.println("Timer is set");
-                           }
-
-                       /*
                        }
-                       else{ //duplicated subscribe
-                           System.err.println("subscriber " + ia.getHostAddress() + " is already in the list");
 
-                       }
-                       */
 
                    }
-                   else if ( line.indexOf("unsubscribe") != -1 ){
+                   else if ( line.indexOf("unsubscribe") != -1 ){ //client ask for unsubscription
                        
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
                        String []tokens = line.split("  ");  //split by two spaces
                        String id = null; 
 
-                       if( tokens.length == 2 ){
+                       if( tokens.length == 2 ){ //length should be two, the first is "unsubscribe" and the 2nd is its id
                         
                            try{
                               id = tokens[1]; //get client id
 
-                              index = getClientIndex( id );
+                              index = getClientIndex( id ); //get index of client in client list
 
-                              addresses.remove( index );
+                              addresses.remove( index ); //remove client from list
 
-                              out.println("OK");
+                              out.println("OK"); //confirmation
 
-                              System.out.println( "Client " + index + " is removed" );
+                              System.out.println( index + "th(st/nd) Client is removed" );
                            }
                            catch( NoSuchClientException nsce ){
 
@@ -182,7 +161,6 @@ public class MultiServer{
 
                        }
                        else{
-                              System.err.println( line );
                               System.err.println("Invalid unsubscribe from " + ia.getHostAddress() + ":" + port );
 
                        }

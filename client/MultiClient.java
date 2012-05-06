@@ -19,14 +19,14 @@ public class MultiClient{
     public static void main(String []args){
 
 
-        new MultiClient().run();
+        new MultiClient().run(); //runing client
 
     }
 
 
     private void unsubscribe() throws Exception{
 
-        if ( clientId == null ){
+        if ( clientId == null ){ //haven't subscribed time
      
             System.err.println("You haven't subscribe time yet!");
             return;
@@ -38,11 +38,11 @@ public class MultiClient{
         PrintWriter out = new PrintWriter( csocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader( new InputStreamReader( csocket.getInputStream() ) );
 
-        out.println("unsubscribe  " + clientId);
+        out.println("unsubscribe  " + clientId); //send request to unsubscribe format: unsubscribe  clientId
 
         String line;
         if( ( line = in.readLine() ) != null &&
-              line.equals("OK") ){
+              line.equals("OK") ){ // get confirmation of server
              
             out.close();
             in.close();
@@ -67,7 +67,7 @@ public class MultiClient{
            PrintWriter out = new PrintWriter( csocket.getOutputStream(), true);
            BufferedReader in = new BufferedReader( new InputStreamReader( csocket.getInputStream() ) );
 
-           out.println("subscribe");
+           out.println("subscribe"); //send request to server
 
            String line;
            if( ( line = in.readLine() ) != null ){
@@ -78,7 +78,7 @@ public class MultiClient{
                     in.close();
                     csocket.close();
                     
-                    this.ss = new ServerSocket( this.port );
+                    this.ss = new ServerSocket( this.port ); //create new server socket to listen from server 
                     System.out.println("Time subscribed, client id is " + clientId);
 
  
@@ -99,7 +99,7 @@ public class MultiClient{
                 Socket s = ss.accept();
     
                 ObjectInputStream in = new ObjectInputStream( s.getInputStream() );
-                timeinfo = (TimeInfo)in.readObject();
+                timeinfo = (TimeInfo)in.readObject(); //get time infomation from server
                 System.out.println( timeinfo.time );
                 
                 in.close();
@@ -111,12 +111,12 @@ public class MultiClient{
         public void cast(){
              
               if( timeinfo.point + 1 < timeinfo.addresses.size() )
-                   timeinfo.point++;  
+                   timeinfo.point++; // incrument 'point' 
               else
                    timeinfo.point = -1; // no more client
     
     
-              if( timeinfo.addresses.size() > 0 && timeinfo.point != -1 ){ 
+              if( timeinfo.addresses.size() > 0 && timeinfo.point != -1 ){ // there is client I need cast time to it
            
                   clientInfo ci;
                   InetAddress ip;
@@ -132,24 +132,25 @@ public class MultiClient{
                             port = ci.getPort();
                             Socket s = new Socket( ip, port );
                             ObjectOutputStream out = new ObjectOutputStream( s.getOutputStream() );
-                            out.writeObject( timeinfo );
+                            out.writeObject( timeinfo ); //send time to client
                             out.close();
                             s.close();
-                            System.out.println("Time is sent to client " +  i  + " " + ip.getHostAddress() 
+                            System.out.println("Time is sent to " + i + "th(st/nd) client "  + ip.getHostAddress() 
                                                + ":" + port + "\n");
                             return;
                         }
                         catch(Exception e)
                         {  
-                            System.err.println("Fail to send time to client " + i ); 
+                            System.err.println("Fail to send time to " + i + "th(st/nd) client "); 
     
-                            if( timeinfo.point + 1 < timeinfo.addresses.size() )
+                            if( timeinfo.point + 1 < timeinfo.addresses.size() ) //try next client 
                                timeinfo.point++;
     
                             continue;
                         }
     
                    }
+
                    System.err.println("Failed to send time to clients, will resend after");
     
                 }
@@ -172,8 +173,8 @@ public class MultiClient{
     
              while(true){
     
-               this.getTime(); 
-               this.cast(); 
+               this.getTime(); //get time from server
+               this.cast();//cast to next client 
     
              }
     
@@ -187,7 +188,7 @@ public class MultiClient{
     
         }
     
-    }
+    } //end of Socket Process
     
     public void run(){
 
@@ -199,18 +200,18 @@ public class MultiClient{
          FileChannel fc = fi.getChannel(); 
          */
 
-         this.subscribe();
+         this.subscribe();//send subscribe to server 
          Thread t = new Thread( new SocketProcess() );  
-         t.start();
+         t.start(); // start a thread to get time from server
           
          while(true){
 
            Console cons;
            String cmd;
            if( ( cons = System.console() ) != null &&
-                 ( cmd = cons.readLine() ) != null  ){
+                 ( cmd = cons.readLine() ) != null  ){ //waiting user's command
 
-               if ( cmd.equals("ussb") ){
+               if ( cmd.equals("unssb") ){ //if user ask to unsubscribe 
                  this.unsubscribe();
                  System.out.println("Client is exiting...");
                  System.exit(0);
@@ -221,8 +222,6 @@ public class MultiClient{
                }
 
            }
-           //this.getTime(); 
-           //this.cast(); 
 
          }
 
