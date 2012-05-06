@@ -27,7 +27,9 @@ public class clientInfo implements Serializable{
 
     public boolean equals( clientInfo ci ){
 
-        if( ia.equals( ci ) )
+        System.out.println("equals");
+        if( ia.equals( ci.getAddress() ) && 
+            port == ci.getPort() )
           return true;
         else
           return false;

@@ -108,12 +108,12 @@ public class MultiServer{
               
                            
                            addresses.add( ci );
-                           System.out.println("New subscriber from " + ia.getHostAddress() );
-                           out.println("OK"); //confirm subscription
+                           System.out.println("New subscriber from " + ia.getHostAddress() + ":" + port );
+                           out.println(addresses.size()-1);//confirm subscription
 
                            if ( this.timer == null ){
                               timer = new Timer();
-                              timer.schedule( new Sender(), 3 * 1000, 3 * 1000 );
+                              timer.schedule( new Sender(), 5 * 1000, 5 * 1000 );
                               System.out.println("Timer is set");
                            }
 
@@ -125,24 +125,46 @@ public class MultiServer{
                        }
 
                    }
-                   else if ( line.equals("unsubscribe") ){
+                   else if ( line.indexOf("unsubscribe") != -1 ){
                        
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
-                       if ( ( index = addresses.indexOf( new clientInfo( ia, port) )) != -1 ){ //remove client
-                          addresses.remove( index );
+                       String []tokens = line.split(":"); 
+
+                       if( tokens.length == 2 ){
+                        
+                           try{
+                              index = Integer.parseInt( tokens[1] ); //get client it
+
+                              addresses.remove( index );
+
+                              out.println("OK");
+
+                              System.out.println( "Client " + index + " is removed" );
+                           }
+                           catch( NumberFormatException nfe){
+
+                              System.err.println("Invalid unsubscribe from " + ia.getHostAddress() + ":" + port );
+
+                           }
+                           catch( IndexOutOfBoundsException iooe ){
+
+                              System.err.println("Invalid client number, request from " + ia.getHostAddress() + ":" + port );
+
+                           }
 
                        }
-                       else{ //invalid unsubscribe command cause client is not in the list
+                       else{
 
-                          System.err.println("Invalid unsubscribe from " + ia.getHostAddress() );
+                              System.err.println("Invalid unsubscribe from " + ia.getHostAddress() + ":" + port );
 
                        }
                    }
                    else{ // invalid request 
                      
                        InetAddress ia = cs.getInetAddress();
-                       System.err.println("Invalid request from " + ia.getHostAddress() );
+                       int port = cs.getPort();
+                       System.err.println("Invalid request from " + ia.getHostAddress() + ":" + port );
 
                    }
                }
