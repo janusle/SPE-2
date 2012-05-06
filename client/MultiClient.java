@@ -38,7 +38,7 @@ public class MultiClient{
         PrintWriter out = new PrintWriter( csocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader( new InputStreamReader( csocket.getInputStream() ) );
 
-        out.println("unsubscribe:" + clientId);
+        out.println("unsubscribe  " + clientId);
 
         String line;
         if( ( line = in.readLine() ) != null &&

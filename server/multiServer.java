@@ -153,7 +153,7 @@ public class MultiServer{
                        
                        InetAddress ia = cs.getInetAddress();
                        int port = cs.getPort();
-                       String []tokens = line.split(":"); 
+                       String []tokens = line.split("  ");  //split by two spaces
                        String id = null; 
 
                        if( tokens.length == 2 ){
@@ -182,7 +182,7 @@ public class MultiServer{
 
                        }
                        else{
-
+                              System.err.println( line );
                               System.err.println("Invalid unsubscribe from " + ia.getHostAddress() + ":" + port );
 
                        }
