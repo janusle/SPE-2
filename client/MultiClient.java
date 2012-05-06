@@ -14,7 +14,7 @@ public class MultiClient{
     private ServerSocket ss = null;
     private int port;
     private TimeInfo timeinfo;
-    private int clientId = -1;
+    private String clientId = null;
 
     public static void main(String []args){
 
@@ -26,7 +26,7 @@ public class MultiClient{
 
     private void unsubscribe() throws Exception{
 
-        if ( clientId == -1 ){
+        if ( clientId == null ){
      
             System.err.println("You haven't subscribe time yet!");
             return;
@@ -72,7 +72,7 @@ public class MultiClient{
            String line;
            if( ( line = in.readLine() ) != null ){
                   
-                    clientId = Integer.parseInt( line ); //get client id
+                    clientId = line; //get client id
 
                     out.close();
                     in.close();
