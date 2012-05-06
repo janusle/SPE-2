@@ -47,7 +47,7 @@ public class MultiClient{
             out.close();
             in.close();
             csocket.close();
-          
+
             System.out.println("Time unsubscribed");
 
         }else{
@@ -94,17 +94,18 @@ public class MultiClient{
 
 
         private void getTime() throws Exception{
+          
+
+                Socket s = ss.accept();
     
-            Socket s = ss.accept();
-    
-            ObjectInputStream in = new ObjectInputStream( s.getInputStream() );
-            timeinfo = (TimeInfo)in.readObject();
-            System.out.println( timeinfo.time );
-            
-            in.close();
-            s.close();
-    
-    
+                ObjectInputStream in = new ObjectInputStream( s.getInputStream() );
+                timeinfo = (TimeInfo)in.readObject();
+                System.out.println( timeinfo.time );
+                
+                in.close();
+                s.close();
+                
+
         }
     
         public void cast(){
@@ -134,7 +135,8 @@ public class MultiClient{
                             out.writeObject( timeinfo );
                             out.close();
                             s.close();
-                            System.out.println("Time is sent to client " +  i  + " " + ip.getHostAddress() + ":" + port + "\n");
+                            System.out.println("Time is sent to client " +  i  + " " + ip.getHostAddress() 
+                                               + ":" + port + "\n");
                             return;
                         }
                         catch(Exception e)
@@ -208,8 +210,11 @@ public class MultiClient{
            if( ( cons = System.console() ) != null &&
                  ( cmd = cons.readLine() ) != null  ){
 
-               if ( cmd.equals("ussb") )
+               if ( cmd.equals("ussb") ){
                  this.unsubscribe();
+                 System.out.println("Client is exiting...");
+                 System.exit(0);
+               }
                else{
 
                  System.out.println("Unknown cmd");
