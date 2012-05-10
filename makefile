@@ -6,10 +6,10 @@ tools:
 	$(JC) ./tools/clientInfo.java 
 	$(JC) ./tools/TimeInfo.java
 
-MultiServer: tools
-	$(JC) ./server/MultiServer.java ./tools/clientInfo.java
+MultiServer: 
+	$(JC) ./server/MultiServer.java ./tools/clientInfo.java ./tools/TimeInfo.java
 
-MultiClient: tools
+MultiClient: 
 	$(JC) ./client/MultiClient.java ./tools/clientInfo.java ./tools/TimeInfo.java
 
 iterativeServer:
