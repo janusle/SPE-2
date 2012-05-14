@@ -169,7 +169,7 @@ public class MultiClient{
           
           try{
              
-             System.out.println("I am start...");
+             System.out.println("I am started...");
     
              while(true){
     
