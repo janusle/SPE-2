@@ -5,3 +5,4 @@ mySrvKeystore
 #class
 *.class
 
+.DS_Store
