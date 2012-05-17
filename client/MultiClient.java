@@ -9,7 +9,7 @@ import tools.*;
 public class MultiClient{
 
 
-    private final String SERVER_HOST = "localhost";//change address before submitting!
+    private final String SERVER_HOST = "yallara.cs.rmit.edu.au";//change address before submitting!
     private final int SERVER_PORT = 40302;
     private ServerSocket ss = null;
     private int port;
@@ -38,7 +38,7 @@ public class MultiClient{
         PrintWriter out = new PrintWriter( csocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader( new InputStreamReader( csocket.getInputStream() ) );
 
-        out.println("unsubscribe  " + clientId); //send request to unsubscribe format: unsubscribe  clientId
+        out.println("unsubscribe  " + clientId); //send request to unsubscribe format: "unsubscribe  clientId"
 
         String line;
         if( ( line = in.readLine() ) != null &&
@@ -194,11 +194,6 @@ public class MultiClient{
 
       try{
 
-         /*
-         InputStream in = System.in;
-         FileInputStream fi = (FileInputStream) in;
-         FileChannel fc = fi.getChannel(); 
-         */
 
          this.subscribe();//send subscribe to server 
          Thread t = new Thread( new SocketProcess() );  

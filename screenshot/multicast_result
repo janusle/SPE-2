@@ -1,0 +1,87 @@
+Script started on Thu May 17 21:14:20 2012
+%./runserver.sh multi
+Server is started...
+New subscriber from 131.170.24.42:64311 client id 64073f2f:1375a81cf5d:-8000
+Timer is set
+Time is sent to 0th(st/nd) client 131.170.24.42:64311
+
+Time is sent to 0th(st/nd) client 131.170.24.42:64311
+
+New subscriber from 131.170.24.42:64319 client id 64073f2f:1375a81cf5d:-7fff
+Time is sent to 0th(st/nd) client 131.170.24.42:64311
+
+Time is sent to 0th(st/nd) client 131.170.24.42:64311
+
+Time is sent to 0th(st/nd) client 131.170.24.42:64311
+
+0th(st/nd) Client is removed
+Time is sent to 0th(st/nd) client 131.170.24.42:64319
+
+Time is sent to 0th(st/nd) client 131.170.24.42:64319
+
+Time is sent to 0th(st/nd) client 131.170.24.42:64319
+
+0th(st/nd) Client is removed
+No subscription, will try one minute after
+
+No subscription, will try one minute after
+
+^C%exit
+exit
+
+script done on Thu May 17 21:15:40 2012
+Script started on Thu May 17 21:13:29 2012
+%./runclient.sh multi
+Time subscribed, client id is 64073f2f:1375a81cf5d:-8000
+I am started...
+21:14:51 17:05:2012
+I am last client
+
+21:14:56 17:05:2012
+I am last client
+
+21:15:01 17:05:2012
+Time is sent to 1th(st/nd) client 131.170.24.42:64319
+
+21:15:06 17:05:2012
+Time is sent to 1th(st/nd) client 131.170.24.42:64319
+
+21:15:11 17:05:2012
+Time is sent to 1th(st/nd) client 131.170.24.42:64319
+
+unssb
+Time unsubscribed
+Client is exiting...
+%exit
+exit
+
+script done on Thu May 17 21:15:45 2012
+Script started on Thu May 17 21:13:34 2012
+%./runclient.sh multi
+Time subscribed, client id is 64073f2f:1375a81cf5d:-7fff
+I am started...
+21:15:01 17:05:2012
+I am last client
+
+21:15:06 17:05:2012
+I am last client
+
+21:15:11 17:05:2012
+I am last client
+
+21:15:16 17:05:2012
+I am last client
+
+21:15:21 17:05:2012
+I am last client
+
+21:15:26 17:05:2012
+I am last client
+
+unssb
+Time unsubscribed
+Client is exiting...
+%exit
+exit
+
+script done on Thu May 17 21:15:43 2012

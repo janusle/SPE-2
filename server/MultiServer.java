@@ -20,7 +20,10 @@ public class MultiServer{
         new MultiServer().run(); //runing server;
          
     }
-
+    
+    /* 
+     * inner class sender for send time to the first client
+     */
     class Sender extends TimerTask{
 
             public void run() {
@@ -73,7 +76,9 @@ public class MultiServer{
     } 
     // end of inner class Sender 
 
-
+    /*
+     * get index in client list by client id
+     */
     private int getClientIndex( String id ) throws NoSuchClientException{
          
         for(int i=0; i<addresses.size(); i++ ){

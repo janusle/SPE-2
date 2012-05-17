@@ -1,0 +1,114 @@
+Script started on Thu May 17 20:32:30 2012
+%./runserver.sh concurrent
+Server started...
+Thread 8 started
+Thread 9 started
+Request from 127.0.0.1
+Request from 127.0.0.1
+Thread 10 started
+Thread 8 finished
+
+Thread 9 finished
+
+Request from 127.0.0.1
+Thread 10 finished
+
+Thread 11 started
+Thread 12 started
+Request from 127.0.0.1
+Thread 11 finished
+
+Request from 127.0.0.1
+Thread 12 finished
+
+Thread 13 started
+Request from 127.0.0.1
+Thread 13 finished
+
+Thread 14 started
+Thread 15 started
+Request from 127.0.0.1
+Thread 14 finished
+
+Thread 16 started
+Request from 127.0.0.1
+Thread 15 finished
+
+Request from 127.0.0.1
+Thread 16 finished
+
+Thread 17 started
+Request from 127.0.0.1
+Thread 17 finished
+
+Thread 18 started
+Request from 127.0.0.1
+Thread 18 finished
+
+Thread 19 started
+Request from 127.0.0.1
+Thread 19 finished
+
+Thread 20 started
+Thread 21 started
+Request from 127.0.0.1
+Thread 21 finished
+
+Request from 127.0.0.1
+Thread 20 finished
+
+Thread 22 started
+Thread 23 started
+Request from 127.0.0.1
+Thread 22 finished
+
+Thread 24 started
+Request from 127.0.0.1
+Thread 23 finished
+
+Request from 127.0.0.1
+Thread 24 finished
+
+Thread 25 started
+Thread 26 started
+Thread 27 started
+Request from 127.0.0.1
+Thread 25 finished
+
+Request from 127.0.0.1
+Thread 26 finished
+
+Request from 127.0.0.1
+Thread 27 finished
+
+^C%exit
+exit
+
+script done on Thu May 17 20:33:54 2012
+Script started on Thu May 17 20:33:11 2012
+%./runclient.sh concurrent
+%20:33:27 17:05:2012
+20:33:27 17:05:2012
+20:33:27 17:05:2012
+20:33:28 17:05:2012
+20:33:28 17:05:2012
+20:33:28 17:05:2012
+20:33:29 17:05:2012
+20:33:29 17:05:2012
+20:33:29 17:05:2012
+20:33:29 17:05:2012
+20:33:30 17:05:2012
+20:33:30 17:05:2012
+20:33:30 17:05:2012
+20:33:30 17:05:2012
+20:33:30 17:05:2012
+20:33:30 17:05:2012
+20:33:31 17:05:2012
+20:33:31 17:05:2012
+20:33:31 17:05:2012
+20:33:31 17:05:2012
+
+%exit
+exit
+
+script done on Thu May 17 20:33:48 2012

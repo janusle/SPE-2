@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 
 public class TimeInfo implements Serializable {
 
-    public ArrayList<clientInfo> addresses;
-    public String time;
-    public int point;
+    public ArrayList<clientInfo> addresses; //client list
+    public String time; //time info
+    public int point; // the index of current client in the client list
 
 
     private String getCurrentTime(){

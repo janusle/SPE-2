@@ -1,0 +1,11 @@
+Script started on Thu May 17 20:14:31 2012
+%make
+javac ./server/iterativeServer.java
+javac ./server/concurrentServer.java
+javac ./client/client.java
+javac ./server/MultiServer.java ./tools/clientInfo.java ./tools/TimeInfo.java
+javac ./client/MultiClient.java ./tools/clientInfo.java ./tools/TimeInfo.java
+%exit
+exit
+
+script done on Thu May 17 20:14:54 2012

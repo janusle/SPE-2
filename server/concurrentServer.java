@@ -6,6 +6,10 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 
+
+/*
+ * process the request
+ */
 class processRequest implements Runnable {
  
    private SSLSocket s; 
@@ -114,7 +118,7 @@ public class concurrentServer {
 
         while (true){ 
             
-            if ( Thread.activeCount() > this.max ){
+            if ( Thread.activeCount() > this.max ){ //check client number
                continue;
             }
 

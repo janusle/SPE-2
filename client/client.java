@@ -10,7 +10,7 @@ public class client{
 
     public static void main(String[] args) {
           
-         client c = new client("localhost", 40302);
+         client c = new client("yallara.cs.rmit.edu.au", 40302);
          c.getTime();
      
     }
@@ -23,7 +23,9 @@ public class client{
 
     }
  
-            
+    /* 
+     * get current time
+     */
     public void getTime(){
 
         try{
@@ -33,7 +35,7 @@ public class client{
               
            BufferedReader in = new BufferedReader(new InputStreamReader( s.getInputStream() ) );
            PrintWriter out = new PrintWriter( s.getOutputStream(), true);
-           out.println( "What is the time?" );
+           out.println( "What is the time?" ); // ask server what's the time
 
            String line = null;
            if ( ( line = in.readLine() ) != null ){
