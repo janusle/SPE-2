@@ -9,7 +9,7 @@ import tools.*;
 public class MultiClient{
 
 
-    private final String SERVER_HOST = "yallara.cs.rmit.edu.au";//change address before submitting!
+    private final String SERVER_HOST = "yallara.cs.rmit.edu.au";
     private final int SERVER_PORT = 40302;
     private ServerSocket ss = null;
     private int port;

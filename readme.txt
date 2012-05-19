@@ -8,7 +8,8 @@
 
    # generate key
    ./genkey.sh  
-   
+   # the password should be 123456 
+
    # run iterative server
    ./runserver.sh iterative
    
@@ -21,7 +22,8 @@
 
    # generate key
    ./genkey.sh
-   
+   # the password should be 123456 
+
    # run concurrent server
    ./runserver.sh concurrent
    
@@ -46,3 +48,7 @@
 3. Clean the *.class files
 
    make clean
+
+
+
+Note: Please run all the servers on yallara becuase client assumes the time servers are on yallara

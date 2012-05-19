@@ -1,3 +1,4 @@
+# Server screenshot
 Script started on Thu May 17 20:32:30 2012
 %./runserver.sh concurrent
 Server started...
@@ -85,6 +86,8 @@ Thread 27 finished
 exit
 
 script done on Thu May 17 20:33:54 2012
+
+# client screenshot
 Script started on Thu May 17 20:33:11 2012
 %./runclient.sh concurrent
 %20:33:27 17:05:2012

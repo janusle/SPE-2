@@ -1,3 +1,4 @@
+# Server screenshot
 Script started on Thu May 17 21:14:20 2012
 %./runserver.sh multi
 Server is started...
@@ -30,6 +31,8 @@ No subscription, will try one minute after
 exit
 
 script done on Thu May 17 21:15:40 2012
+
+# 0th Client screenshot
 Script started on Thu May 17 21:13:29 2012
 %./runclient.sh multi
 Time subscribed, client id is 64073f2f:1375a81cf5d:-8000
@@ -56,6 +59,8 @@ Client is exiting...
 exit
 
 script done on Thu May 17 21:15:45 2012
+
+# 1st Client screenshot
 Script started on Thu May 17 21:13:34 2012
 %./runclient.sh multi
 Time subscribed, client id is 64073f2f:1375a81cf5d:-7fff

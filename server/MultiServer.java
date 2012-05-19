@@ -11,7 +11,7 @@ class NoSuchClientException extends Exception{};
 public class MultiServer{
 
     private final int PORT = 40302;
-    private final int DELAY = 5000;
+    private final int DELAY = 60000;
     private ArrayList<clientInfo> addresses = new ArrayList<clientInfo>();
     private Timer timer = null;
 

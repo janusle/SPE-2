@@ -1,3 +1,4 @@
+# Server screenshot
 Script started on Thu May 17 20:27:30 2012
 %./runclient.sh iterative
 %20:28:09 17:05:2012
@@ -25,6 +26,8 @@ Script started on Thu May 17 20:27:30 2012
 exit
 
 script done on Thu May 17 20:28:19 2012
+
+# Client screenshot
 Script started on Thu May 17 20:27:30 2012
 %./runclient.sh iterative
 %20:28:09 17:05:2012
